@@ -4,8 +4,8 @@ metadata:
   name: sleepy-app
   labels:
     app: sleepy-app
-    environment: #{Octopus.Environment.Name}
-    project: #{Octopus.Project.Name}
+    environment: #{Octopus.Environment.Slug}
+    project: #{Octopus.Project.Slug}
     managed-by: octopus-deploy
 spec:
   replicas: #{SleepyApp.Replicas}
@@ -16,8 +16,8 @@ spec:
     metadata:
       labels:
         app: sleepy-app
-        environment: #{Octopus.Environment.Name}
-        project: #{Octopus.Project.Name}
+        environment: #{Octopus.Environment.Slug}
+        project: #{Octopus.Project.Slug}
     spec:
       containers:
       - name: bash
