@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sleepy-app
+  labels:
+    app: sleepy-app
+    environment: #{Octopus.Environment.Name}
+    project: #{Octopus.Project.Name}
+    managed-by: octopus-deploy
+  annotations:
+    octopus.deployment.id: "#{Octopus.Deployment.Id}"
+    octopus.release.number: "#{Octopus.Release.Number}"
+    octopus.deployed.by: "#{Octopus.Deployment.CreatedBy.DisplayName}"
+spec:
+  replicas: #{SleepyApp.Replicas}
+  selector:
+    matchLabels:
+      app: sleepy-app
+  template:
+    metadata:
+      labels:
+        app: sleepy-app
+        environment: #{Octopus.Environment.Name}
+        project: #{Octopus.Project.Name}
+    spec:
+      containers:
+      - name: bash
+        image: bash:5
+        command: ["/usr/local/bin/bash"]
+        args: ["-c", "trap : TERM INT; echo 'Sleeping...' && sleep infinity & wait"]
+
